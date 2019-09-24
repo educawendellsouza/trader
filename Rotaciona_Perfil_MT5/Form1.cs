@@ -22,20 +22,56 @@ namespace Rotaciona_Perfil_MT5
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Iniciando MT4");
-            Process.Start(@"H:\\Trader\\-\\terminal - Atalho.lnk");
-            System.Threading.Thread.Sleep(30000);
-            var timer = new System.Threading.Timer((x) => {SendKeys.Send("{CTRL}%{F5}");}, null, 10000, Timeout.Infinite);
+            //Process p = new Process();
+            //p.StartInfo.WorkingDirectory = (Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"MetaTrader 5\MT5 - Monitor.lnk"));
+            //p.StartInfo.FileName = @"C:\Program Files\MetaTrader 5\terminal64.exe";
+            //p.StartInfo.CreateNoWindow = true;
+            //p.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+            //p.Start();
 
-            // Link para leitura https://docs.microsoft.com/pt-br/dotnet/api/system.windows.forms.sendkeys.send?view=netframework-4.8
+            //if (p.Responding)
+            //{
+            //    MessageBox.Show("Status do Processo MT5 = Em Execução");
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Status do Processo MT5 = Não respondendo");
+            //}
+
+            //System.Threading.Thread.Sleep(30000);
+
+            //// Link para leitura https://docs.microsoft.com/pt-br/dotnet/api/system.windows.forms.sendkeys.send?view=netframework-4.8
         }
 
         private void Button2_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Iniciando MT5");
-            Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"MetaTrader 5\MT5 - Monitor.lnk"));           
-            System.Threading.Thread.Sleep(30000);
+        {            
+            Process p = new Process();
+            // string nomeDoPrograma;
+            p.StartInfo.WorkingDirectory = (Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"MetaTrader 5\MT5 - Monitor.lnk"));
+            p.StartInfo.FileName = @"C:\Program Files\MetaTrader 5\terminal64.exe";
+            p.StartInfo.CreateNoWindow = true;
+            p.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+            p.Start();
+
+            MessageBox.Show("Status do Processo MT5 = Em Execução");
+            
+            if (p.Responding)
+            {                
+                p.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+                SendKeys.SendWait("%{R}");
+                MessageBox.Show("Envio do ALT+R");
+            }
+            else
+            {
+                MessageBox.Show("Status do Processo MT5 = Não respondendo");
+            }
+            //SendKeys.SendWait("%{R}") as p.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
             //var timer = new System.Threading.Timer((x) => { SendKeys.Send("{CTRL}%{F5}"); }, null, 15000, Timeout.Infinite);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var timer = new System.Threading.Timer((x) => {SendKeys.Send("{CTRL}%{F5}");}, null, 10000, Timeout.Infinite);
         }
     }
 }
